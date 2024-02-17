@@ -35,20 +35,22 @@ public class commandeController {
     }
 
     @PostMapping("/addcommande")
-
     public ResponseEntity<Commande> addCommande(@Valid @RequestBody Commande commande) {
         // Check if the User with the specified userId exists
-        if (userRepository.findById(commande.getUserId()).isPresent()) {
-            // Save the Commande
-            Commande savedCommande = commandeService.saveCommande(commande);
+        User user = userRepository.findById(commande.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + commande.getUser().getId()));
     
-            // Return the saved Commande in the response
-            return new ResponseEntity<>(savedCommande, HttpStatus.CREATED);
-        } else {
-            // If the User does not exist, throw an EntityNotFoundException
-            throw new EntityNotFoundException("User not found with id: " + commande.getUserId());
-        }
+        // Associate the Commande with the user
+        commande.setUser(user);
+    
+        // Save the Commande
+        Commande savedCommande = commandeService.saveCommande(commande);
+    
+        // Return the saved Commande in the response
+        return new ResponseEntity<>(savedCommande, HttpStatus.CREATED);
     }
+    
+    
     
     
     

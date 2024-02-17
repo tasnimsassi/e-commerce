@@ -16,8 +16,8 @@ public class Commande {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Transient
-    private Long userId;
+    
+    //private Long userId;
 
     // Constructors, getters, setters...
 
@@ -25,12 +25,11 @@ public class Commande {
         // Default constructor
     }
 
-    public Commande(String reference, double totalAmount, Long userId) {
+    public Commande(String reference, double totalAmount, User user) {
         this.reference = reference;
         this.totalAmount = totalAmount;
-        this.userId = userId;
+        this.user = user;
     }
-
     // Getters and Setters...
 
     public Long getId() {
@@ -59,11 +58,11 @@ public class Commande {
 
  
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
