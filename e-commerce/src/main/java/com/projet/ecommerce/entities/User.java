@@ -3,13 +3,16 @@ package com.projet.ecommerce.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User implements Serializable {
@@ -18,38 +21,28 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
-    private Long id;
+    private Long userId;
 
     private String email;
     private String pwd;
     private String fname;
     private String lname;
-
-    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Commande> commandes;
 
-    
-
     public User() {
-		super();
-	}
-
-    public User(String email, String pwd, String fname, String lname, List<Commande> commandes) {
-        this.email = email;
-        this.pwd = pwd;
-        this.fname = fname;
-        this.lname = lname;
-        this.commandes = commandes;
+        super();
     }
 
     // Getters and Setters...
-   
-    public Long getId() {
-        return id;
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -84,7 +77,6 @@ public class User implements Serializable {
         this.lname = lname;
     }
 
- 
     public List<Commande> getCommandes() {
         return commandes;
     }

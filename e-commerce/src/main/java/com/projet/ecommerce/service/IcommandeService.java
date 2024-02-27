@@ -9,5 +9,8 @@ public interface IcommandeService {
 
     List<Commande> findAllCommandes();
 
+    void addProduitToCommande(Long commandeId, Long produitId);
+    void removeProduitFromCommande(Long commandeId, Long produitId);
     
 }
+

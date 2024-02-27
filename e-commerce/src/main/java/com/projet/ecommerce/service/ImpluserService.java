@@ -55,6 +55,26 @@ public class ImpluserService implements IuserService {
         urepos.deleteById(id);
     }
 
+    @Override
+    public List<User> getUsersWithCommands() {
+        return urepos.findByCommandesIsNotEmpty();
+    }
+
+    
+    @Override
+    public User getUserWithCommandsAndProducts(Long userId) {
+        Optional<User> userOptional = urepos.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.getCommandes().forEach(commande -> {
+                commande.getProduits().size(); // Chargement paresseux des produits
+            });
+            return user;
+        }
+
+        return null;
+    }
 	
 
 }

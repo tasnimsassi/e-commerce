@@ -1,7 +1,12 @@
 package com.projet.ecommerce.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "produit")
@@ -13,15 +18,14 @@ public class Produit implements Serializable {
     @Column(name = "produit_id")
     private Long id;
 
-    @Column(name = "nom")
+ 
     private String nom;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "prix")
     private double prix;
-
+    private String imagePath;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "produits")
+    private List<Commande> commandes;
     // Constructors, getters, and setters
 
     public Produit() {
@@ -35,6 +39,14 @@ public class Produit implements Serializable {
     }
 
     // Getters and setters
+
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
 
     public Long getId() {
         return id;
@@ -67,4 +79,14 @@ public class Produit implements Serializable {
     public void setPrix(double prix) {
         this.prix = prix;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+
 }

@@ -20,5 +20,7 @@ public interface IuserService {
     User updateUser(Long id, User updatedUser);
 
     void deleteUser(Long id);
-
+    List<User> getUsersWithCommands();
+    
+    User getUserWithCommandsAndProducts(Long userId);
 }
